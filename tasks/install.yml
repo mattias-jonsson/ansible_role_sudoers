@@ -1,0 +1,7 @@
+---
+
+- name: install packages
+  become: True
+  package:
+    name: "{{ ansible_role_sudoers_dependencies }}"
+    state: present

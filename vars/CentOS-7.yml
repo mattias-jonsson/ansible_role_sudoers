@@ -1,0 +1,7 @@
+---
+
+ansible_role_sudoers_dependencies:
+  - sudo
+
+ansible_role_sudoersd_path: /etc/sudoers.d
+ansible_role_sudoers_file: /etc/sudoers

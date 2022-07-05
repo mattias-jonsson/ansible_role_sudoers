@@ -1,0 +1,7 @@
+---
+
+ansible_role_sudoersd_file: 99_ansible_sudoers
+ansible_role_sudoers_add_ansible_user: True
+ansible_role_sudoers_ansible_user_require_password: True
+ansible_role_sudoers_cleanup: True
+ansible_role_sudoers_cleanup_excludes: []

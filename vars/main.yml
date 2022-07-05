@@ -1,0 +1,5 @@
+---
+
+ansible_role_sudoers_cleanup_default_excludes:
+  - '^{{ ansible_role_sudoersd_file }}$'
+  - '.*\..*'
