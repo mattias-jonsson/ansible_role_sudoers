@@ -1,8 +1,7 @@
 Ansible Role: ansible_role_sudoers
 =========
 
-An Ansible role that installs and configures sudo. The contents of the sudoers file is replaced with original content for each distribution and modifications will be added to the sudoers.d folder. Any modifications will result in a backup of original file, the name of the backup-file will be in the format of \<filename\>.{{timestamp}}.bkp.
-This role supports the following Linux distributions:
+Installs and configures sudo. The contents of the sudoers file is replaced with original content for each distribution and modifications will be added to the sudoers.d folder. Any modifications will result in a backup of original file. This role supports the following Linux distributions:
 
 <ul>
 <li>CentOS 7/8
@@ -13,12 +12,12 @@ This role supports the following Linux distributions:
 Requirements
 ------------
 
-This role has no dependencies besides what is included in Ansible Core.
+None.
 
 Role Variables
 --------------
 
-Available variables are listed below, along with default values where applicable (see defaults/main.yml):
+Available variables are listed below, along with default values where applicable (see `defaults/main.yml`):
 
     ansible_role_sudoersd_file:
 
@@ -69,12 +68,11 @@ List of optional allowed sudo commands with or without arguments, NOEXEC will be
 Dependencies
 ------------
 
-This role has no external dependencies.
+None.
 
 Example Playbook
 ----------------
 
-Setup sudoers for someuser and someotheruser, also adds the ansible user to sudoers.d and sets it up to not require password for sudo operations.
 
     - hosts: servers
 
