@@ -1,4 +1,5 @@
 ---
+
 galaxy_info:
   author: Mattias Jonsson
   description: Ansible role that handle sudoers configuration on supported distributions.

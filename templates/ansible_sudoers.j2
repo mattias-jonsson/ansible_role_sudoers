@@ -2,11 +2,13 @@
 
 {% if ansible_role_sudoers_add_ansible_user %}
 {{ ansible_user }} ALL=(ALL) {{ "PASSWD:" if ansible_role_sudoers_ansible_user_require_password | default(false) else "NOPASSWD:" }} ALL
+
 {% endif %}
 
 {% for item in ansible_role_sudoers %}
 {{ item.name }} ALL=(ALL) {{ "PASSWD:" if item['require_password'] | default(true) else "NOPASSWD:" }}{% if item.commands is defined %}NOEXEC: {{ item.name | upper }}_CMDS {% else %} ALL {% endif %}
 {% if item.commands is defined %} 
 Cmnd_Alias {{ item.name | upper }}_CMDS = {{ item.commands | join(', ') }}
+
 {% endif %}
 {% endfor %}
