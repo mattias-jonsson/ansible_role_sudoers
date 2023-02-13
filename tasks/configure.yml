@@ -2,7 +2,7 @@
 
 - name: create sudoers file from template
   become: true
-  template:
+  ansible.builtin.template:
     src: "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}_sudoers.j2"
     dest: "{{ ansible_role_sudoers_file }}"
     owner: root
@@ -13,7 +13,7 @@
 
 - name: create sudoers.d file from template
   become: true
-  template:
+  ansible.builtin.template:
     src: ansible_sudoers.j2
     dest: "{{ ansible_role_sudoersd_path }}/{{ ansible_role_sudoersd_file }}"
     owner: root
@@ -26,7 +26,7 @@
 - block:
     - name: build list of unwanted files in sudoers.d
       become: true
-      find:
+      ansible.builtin.find:
         path: "{{ ansible_role_sudoersd_path }}"
         file_type: any
         pattern: .*
@@ -36,7 +36,7 @@
 
     - name: rename unwanted files in sudoers.d with the extension .disabled
       become: true
-      command: mv "{{ ansible_role_sudoersd_path }}/{{ item | basename }}" "{{ ansible_role_sudoersd_path }}/{{ item | basename }}.disabled"
+      ansible.builtin.command: mv "{{ ansible_role_sudoersd_path }}/{{ item | basename }}" "{{ ansible_role_sudoersd_path }}/{{ item | basename }}.disabled"
       with_items: "{{ sudoersd_matched_files.files | map(attribute='path') | list }}"
   when: ansible_role_sudoers_cleanup | bool
 
