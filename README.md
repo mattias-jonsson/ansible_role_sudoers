@@ -41,13 +41,13 @@ Example Playbook
 
       vars:
         ansible_role_sudoers:
-        - name: someuser
-          require_password: true
-          commands: 
-            - /bin/something
-            - /bin/something_else  -a1 -b2 -c3
-        - name: someotheruser
-          require_password: true
+          - name: someuser
+            require_password: true
+            commands:
+              - /bin/something
+              - /bin/something_else  -a1 -b2 -c3
+          - name: someotheruser
+            require_password: true
         ansible_role_sudoers_cleanup_excludes:
           - dont_disable_this_1
           - dont_disable_this_2
