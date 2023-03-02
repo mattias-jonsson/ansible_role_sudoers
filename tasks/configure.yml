@@ -1,6 +1,6 @@
 ---
 
-- name: create sudoers file from template
+- name: Create sudoers file from template.
   become: true
   ansible.builtin.template:
     src: "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}_sudoers.j2"
@@ -9,9 +9,9 @@
     group: root
     mode: '0440'
     validate: visudo -cf %s
-    backup: yes
+    backup: true
 
-- name: create sudoers.d file from template
+- name: Create sudoers.d file from template.
   become: true
   ansible.builtin.template:
     src: ansible_sudoers.j2
@@ -20,32 +20,34 @@
     group: root
     mode: '0440'
     validate: visudo -cf %s
-    backup: yes
+    backup: true
 
 
-- block:
-    - name: build list of unwanted files in sudoers.d
+- name: Cleanup block
+  when: ansible_role_sudoers_cleanup | bool
+  block:
+    - name: Build list of unwanted files in sudoers.d.
       become: true
       ansible.builtin.find:
         path: "{{ ansible_role_sudoersd_path }}"
         file_type: any
         pattern: .*
-        use_regex: yes
+        use_regex: true
         excludes: '{{ ansible_role_sudoers_cleanup_default_excludes + ansible_role_sudoers_cleanup_excludes }}'
       register: sudoersd_matched_files
 
-    - name: rename unwanted files in sudoers.d with the extension .disabled
+    - name: Rename unwanted files in sudoers.d with the extension .disabled.
       become: true
       ansible.builtin.command: mv "{{ ansible_role_sudoersd_path }}/{{ item | basename }}" "{{ ansible_role_sudoersd_path }}/{{ item | basename }}.disabled"
       with_items: "{{ sudoersd_matched_files.files | map(attribute='path') | list }}"
-  when: ansible_role_sudoers_cleanup | bool
+
 
 # set conditional for SSS sudoers:        files sss"
-- name: configure nsswitch.conf for sudo and sssd
-  become: True
+- name: Configure nsswitch.conf for sudo and sssd.
+  become: true
   ansible.builtin.lineinfile:
     path: /etc/nsswitch.conf
     line: "sudoers:        files"
     state: present
     regexp: '^sudoers:'
-    backup: yes
+    backup: true

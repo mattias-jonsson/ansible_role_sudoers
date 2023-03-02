@@ -1,7 +1,7 @@
 ---
 
-- name: install packages
-  become: True
+- name: Install packages.
+  become: true
   ansible.builtin.package:
     name: "{{ ansible_role_sudoers_dependencies }}"
     state: present
